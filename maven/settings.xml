@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <servers>
+    <!-- Nexus Servers -->
+    <server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>nexus</password>
+    </server>
+
+    <server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>nexus</password>
+    </server>
+
+    <!-- SonarQube Server -->
+    <server>
+      <id>sonar</id>
+      <!-- Use the token as username, leave password empty -->
+      <username>squ_9e36b9c96f589d4cd7acd54700f0f70ae352e61a</username>
+      <password></password>
+    </server>
+  </servers>
+
+  <mirrors>
+    <!-- Optional: Use Nexus as a mirror for Maven Central -->
+    <mirror>
+      <id>nexus-central</id>
+      <mirrorOf>central</mirrorOf>
+      <url>http://98.80.201.217:8081/repository/maven-central/</url>
+    </mirror>
+  </mirrors>
+
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <properties>
+        <nexus.releases.url>http://98.80.201.217:8081/repository/maven-releases/</nexus.releases.url>
+        <nexus.snapshots.url>http://98.80.201.217:8081/repository/maven-snapshots/</nexus.snapshots.url>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <!-- Sonar login via token -->
+        <sonar.login>${env.SONAR_TOKEN}</sonar.login>
+      </properties>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>nexus</activeProfile>
+    <activeProfile>sonar</activeProfile>
+  </activeProfiles>
+
+</settings>
